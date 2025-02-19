@@ -71,6 +71,8 @@ n == code.length
  */
 import java.util.*;
 public class Decode{
+    // T.C:- O(N) , S.C:- O(N)
+    // A simple approach is use fixed size sliding window , because it helps 
     private static int[] slideWindowRight(int[] arr,int n,int k){
         int sum = 0;
         int i = 0 , j;
@@ -93,7 +95,7 @@ public class Decode{
         int[] res = new int[n];
 
         for(int pos = 0 ; pos < n ; pos++){
-            res[pos] = prefix[(pos + 1) % n];
+            res[pos] = prefix[(pos + 1) % n]; // when you want to find the sum of next k elements ask the next guy
         }
 
         return res;
@@ -123,7 +125,9 @@ public class Decode{
         int[] res = new int[n];
         // System.out.println(Arrays.toString(suffix));
         for(int pos = 0 ; pos < n ; pos++){
-            res[pos] = suffix[(pos - 1 + n ) % n ];
+            res[pos] = suffix[(pos - 1 + n ) % n ]; // this was figured out after a lot of struggle literaly(2hrs)
+            // the logic was if we want to last k elements sum when we are at index 'pos' ask the previous guy , if prev was - 1 
+            // add n to it to make it last element of array
             
         }
 

@@ -47,9 +47,43 @@ Sample Output-2:
 import java.util.*;
 public class TallestTree {
 
+    // T.C:- O(N^2) , S.C:- O(1)
     private static int getLongestTreeArrangment(int[] heights,int n){
-        
+        int longest = 0;
+
+        // the first element cannot be my peak , and last element cannot be my peak
+
+        for(int i = 1 ; i <= n - 2 ; i++){
+            // check if it's a peak element 
+            if(heights[i] > heights[i-1] && heights[i] > heights[i+1]){
+                // it is a peak since this is greater than both of it's nbrs
+
+                // go and find out the left lower points of this valley
+                int j = i;
+
+                while(j > 0 && heights[j] > heights[j-1]){
+                    j--;
+                }
+
+                int left_height = i - j + 1;
+
+                // now go and find right lower points of this valley
+
+                j = i;
+
+                while(j + 1 < n && heights[j] > heights[j+1]){
+                    j++;
+                }
+
+                int right_height = j - i + 1;
+
+                longest = Math.max(longest,left_height + right_height - 1); // since peak element got added twice remove one of the occrrence
+            }
+        }
+        return longest;
     }
+
+    
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         

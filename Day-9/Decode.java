@@ -71,8 +71,73 @@ n == code.length
  */
 import java.util.*;
 public class Decode{
-    private static int[] decrypt(int[] arr,int n,int k){
+    private static int[] slideWindowRight(int[] arr,int n,int k){
+        int sum = 0;
+        int i = 0 , j;
         
+        int[] prefix = new int[n];
+        
+        for(j = 0 ; j < k ; j++){
+            sum += arr[j];
+        }
+        while(i < n){
+            
+            prefix[i] = sum;
+            sum -= arr[i];
+            sum += arr[j];
+            i++;
+            j = (j+1) % n;
+            
+        }  
+
+        int[] res = new int[n];
+
+        for(int pos = 0 ; pos < n ; pos++){
+            res[pos] = prefix[(pos + 1) % n];
+        }
+
+        return res;
+    }
+
+    private static int[] slideWindowLeft(int[] arr,int n,int k){
+        int sum = 0;
+        int i = n - 1 , j;
+        
+        int[] suffix = new int[n];
+        
+        for(j = n - 1 ; j >= n - k ; j--){
+            sum += arr[j];
+        }
+        
+        while(i >= 0){
+            
+            suffix[i] = sum;
+            sum -= arr[i];
+            sum += arr[j];
+            i--;
+            j = (j - 1 + n) % n; // Move j backward in a circular way
+            
+            
+        }  
+
+        int[] res = new int[n];
+        // System.out.println(Arrays.toString(suffix));
+        for(int pos = 0 ; pos < n ; pos++){
+            res[pos] = suffix[(pos - 1 + n ) % n ];
+            
+        }
+
+        return res;
+    }
+    private static int[] decrypt(int[] arr,int n,int k){
+        if(k == 0){
+            return new int[n];
+        }else if(k > 0){
+            return slideWindowRight(arr,n,k);
+        }else{
+            return slideWindowLeft(arr,n,-k);
+        }
+
     }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);

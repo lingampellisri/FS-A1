@@ -50,18 +50,19 @@ Explanation:
 5 numbers have a prime number of set bits.
 
  */
-import java.util.Scanner;
+import java.util.*;
 public class PrimeSetBits {
-    private static boolean isPrime(int n){
-        if(n < 2) return false;
-        if (n == 2) return true;  // 2 is the smallest prime number
-        for(int i = 2 ; i <= Math.pow(n,0.5) ; i++){
-            if(n % i == 0) return false;
-        } 
+    // private static boolean isPrime(int n){
+    //     if(n < 2) return false;
+    //     if (n == 2) return true;  // 2 is the smallest prime number
+    //     for(int i = 2 ; i <= Math.pow(n,0.5) ; i++){
+    //         if(n % i == 0) return false;
+    //     } 
 
-        return true;
-    }
+    //     return true;
+    // }
     private static int countSetBits(int num){
+        // T.C:- O(log(n))
         int cnt = 0;
         while(num != 0){
             cnt += (num & 1);
@@ -70,10 +71,23 @@ public class PrimeSetBits {
 
         return cnt;
     }
+
+    private static int countSetBitsUsingBrians(int n) {
+        // I can use Brian Kernighan's Algorithm to find number of set bits in O(k) where k is number of set bits   
+        int cnt = 0;
+        while(n != 0){
+            n = (n & (n-1)); // this clears the rightmost set bits and now we can increment our count
+            cnt++;
+        }
+
+        return cnt;
+    }
     private static int countPrimeSetBits(int left,int right){
+        // Since the constraints are small till 10^6 we can create a hashmap , prime bits can go till 19 max
+        HashSet<Integer> primes = new HashSet<>(Arrays.asList(2,3,5,7,11,13,17,19));
         int cnt = 0;
         for(int i = left ; i <= right ; i++){
-            if(isPrime(countSetBits(i))){
+            if(primes.contains(countSetBitsUsingBrians(i))){
                 cnt++;
             }
         }
@@ -85,7 +99,7 @@ public class PrimeSetBits {
         
         int left = sc.nextInt();
         int right = sc.nextInt();
-
+        
         System.out.println(countPrimeSetBits(left,right));
         
         sc.close();

@@ -44,6 +44,16 @@ Explanation:
 */
 import java.util.*;
 public class CountingBits{
+    private static int hammingWeight(int n) {
+        // I can use Brian Kernighan's Algorithm to find number of set bits in O(k) where k is number of set bits   
+        int cnt = 0;
+        while(n != 0){
+            n = (n & (n-1)); // this clears the rightmost set bits and now we can increment our count
+            cnt++;
+        }
+
+        return cnt;
+    }
     private static int countBits(int n){
         int cnt = 0;
         while(n != 0){

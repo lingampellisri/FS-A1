@@ -55,6 +55,7 @@ public class CountingBits{
         return cnt;
     }
     private static int countBits(int n){
+        // T.C:- O(logn)
         int cnt = 0;
         while(n != 0){
            

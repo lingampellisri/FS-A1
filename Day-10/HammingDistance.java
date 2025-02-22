@@ -39,32 +39,76 @@ Sample Output-2:
 ----------------
 4
  */
-import java.util.*;
-public class HammingDistance{
-    public static int hamming(int n1,int n2){
-        int and = n1^n2;
-        int count = 0;
-        while(and>0){
-            if(and%2==1){
-                count++;
-            }
-            and=and>>1;
+import java.util.Scanner;
+public class HammingDistance {
+    // Approach:-i) Brute force , take xor of each pair and count set bits , T.C:- O(N^2) , S.C:- O(1)
+    private static int countSetBits(int n){
+        int cnt = 0;
+        while(n != 0){
+           
+            cnt += (n & 1);
+            n = n >> 1;
         }
-        return count;
+
+        return cnt;
     }
-    public static void main(String args[]){
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int [] a = new int[n];
-        for(int i=0;i<n;i++){
-            a[i] = sc.nextInt();
-        }
-        int sum = 0;
-        for(int i=0;i<n;i++){
-            for(int j=i+1;j<n;j++){
-                sum += hamming(a[i],a[j]);
+    private static int getHammingSum(int[] arr,int n){
+
+        int hamSum = 0;
+
+        for(int i = 0 ; i < n ; i++){
+            for(int j = i + 1 ; j < n ; j++){
+                hamSum += countSetBits(arr[i] ^ arr[j]);
             }
         }
-        System.out.print(sum);
+
+        return hamSum;
+    }
+    // Approach-ii) Optimized 
+    private static int totalHammingDistance(int[] nums,int n) {
+        /*  T.C:- O(32 * N) , S.C:- O(1)
+            the main intution is for a particular bit position 
+            -> If the bit is 0 -> check for how many numbers have 1 at this pos
+            -> If the bit is 1 -> check for how many numbers have 0 at this bit pos
+            total contribution = ones_contri + zero_contri
+            => number of zeros +  number of ones
+            => noOfZeros * noOfOnes
+        */
+
+        int totalHamSum = 0;
+        for(int i = 0 ; i < 32 ; i++){
+            int onesCnt = 0;
+
+            for(int j = 0 ; j < n ; j++){
+                onesCnt += (nums[j] & 1);
+                nums[j] = nums[j] >> 1;
+            }
+
+            int zerosCnt = n - onesCnt;
+
+            totalHamSum += onesCnt * zerosCnt;
+
+        }
+
+        return totalHamSum;
+
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        
+        for(int i = 0 ; i < n ; i++){
+            arr[i] = sc.nextInt(); 
+        }
+
+        // System.out.println(getHammingSum(arr,n)); // apprach-i
+        System.out.println(totalHammingDistance(arr,n));
+        
+        sc.close();
     }
 }
+      
+
+        

@@ -74,6 +74,64 @@ Explanation:
 So, the total number of times they have to refill is 0 + 0 + 0 = 0.
 
  */
+
+import java.util.Scanner;
+
 public class ScreenPlay {
-    
+
+    private static int getMinRefills(int[] arr, int N, int T, int V) {
+        // Trvikram starts from 1st pos and Vamshi from ending
+        int i = 0, j = N - 1;
+        int minRefills = 0;
+        int t = T, v = V;
+        while (i < j) {
+
+            if (T < arr[i]) {
+                minRefills++;
+                T = t;
+            }
+            T -= arr[i];
+
+            if (V < arr[j]) {
+                minRefills++;
+                V = v;
+            }
+            V -= arr[j];
+
+            i++;
+            j--;
+        }
+
+        if (i == j) {
+            // check who has maximum papers 
+
+            if (T >= V && T >= arr[i]) {
+                T -= arr[i];
+            } else if (V > T && V >= arr[i]) {
+                V -= arr[i];
+            } else if (T < arr[i] && V < arr[i]) {
+                minRefills++;
+            }
+        }
+        return minRefills;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int N = sc.nextInt();
+
+        int T = sc.nextInt();
+
+        int V = sc.nextInt();
+
+        int[] arr = new int[N];
+        for (int i = 0; i < N; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+        System.out.println(getMinRefills(arr, N, T, V));
+
+        sc.close();
+    }
 }

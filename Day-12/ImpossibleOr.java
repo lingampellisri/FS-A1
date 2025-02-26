@@ -1,7 +1,9 @@
 /*
 You are given a 0-aa integer array nums.
 
-We say that an integer x is expressible from nums if there exist some integers 0 <= index1 < index2 < ... < indexk < nums.length for which nums[index1] | nums[index2] | ... | nums[indexk] = x. In other words, an integer is expressible if it can be written as the bitwise OR of some subsequence of nums.
+We say that an integer x is expressible from nums if there exist some integers 0 <= index1 < index2 < ... < indexk < nums.length 
+for which nums[index1] | nums[index2] | ... | nums[indexk] = x. In other words, an integer is expressible if it can be written 
+as the bitwise OR of some subsequence of nums.
 
 Return the minimum positive non-zero integer that is not expressible from nums.
 
@@ -39,11 +41,40 @@ Constraints:
  */
 import java.util.*;
 public class ImpossibleOr {
-    Scanner sc = new Scanner(System.in);
-    
-    int n = sc.nextInt();
 
-    int[] arr = new int[n];
-    
-    sc.close();
+    private static int getImpossibleOr(int[] arr,int n){
+        HashSet<Long> st = new HashSet<>();
+
+        for(int i = 0 ; i < n ; i++){
+            long or = 0;
+            for(int j = i ; j < n ; j++){
+                or |= arr[j];
+                st.add(or);
+            }
+        }
+
+        long i = 1;
+        while(true){
+            if(!st.contains(i)){
+                return (int)i;
+            }
+            i++;
+        }
+
+    }
+    public static void main(String[] args) {
+        
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+
+        int[] arr = new int[n];
+        
+        for(int i = 0 ; i < n ; i++){
+            arr[i] = sc.nextInt();
+        }
+
+        System.out.println(getImpossibleOr(arr,n));
+        sc.close();
+    }
 }

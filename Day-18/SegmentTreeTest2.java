@@ -114,14 +114,19 @@ class SegmentTree implements SegmentTreeOperations{
 
     }
 
-    private void printTree(SegmentTreeNode node) {
+    @Override
+    public String toString(){
+        return printTree(root); // so when i print the segment tree object i will get the post order traversal 
+    }
+
+    private String printTree(SegmentTreeNode node) {
         if (node == null)
-            return;
+            return "";
 
         printTree(node.left);
         printTree(node.right);
 
-        System.out.print(node.sum + " ");
+        return node.sum + " ";
     }
 
 }
@@ -141,6 +146,7 @@ public class SegmentTreeTest2 {
         // System.out.print("Segment tree is : ");
         // segTree.printSegmentTree();
         // System.out.println();
+        // System.out.print("Segment tree is : " + segTree);
 
         while (q-- > 0) {
             int choice = sc.nextInt();

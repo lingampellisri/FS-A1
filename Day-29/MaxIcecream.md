@@ -86,7 +86,7 @@ public class MaxIcecream {
             mp.put(flavors[right], mp.getOrDefault(flavors[right], 0) + 1);
             cnt++;
 
-            if (mp.size() > 2) {
+            while(mp.size() > 2) {
                 mp.put(flavors[left], mp.get(flavors[left]) - 1);
                 if (mp.get(flavors[left]) == 0) {
                     mp.remove(flavors[left]);

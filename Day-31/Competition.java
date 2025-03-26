@@ -45,23 +45,34 @@ import java.util.*;
 public class Competition {
 
     private static int getCountOfCommonChars(String[] words){
-        HashSet<Character> st = new HashSet<>();
-        
-        for(int i = 0 ; i < words[0].length() ; i++){
-            st.add(words[0].charAt(i));
+        int[] freq = new int[26];
+
+        int n = words.length;
+        String firstWord = words[0];
+
+        // first calc word1 ka freq
+        for(int i = 0 ; i < firstWord.length() ; i++){
+            freq[firstWord.charAt(i) - 'a']++;
+        }
+
+        // Now go to each and every word and update the freq map , but considering minimum freq of both
+        for(int i = 1 ; i < n ; i++){
+            String word = words[i];
+
+            // Now calc the freq of letters in this word
+            int[] temp = new int[26];
+            for(char ch : word.toCharArray()){
+                temp[ch - 'a']++;
+            }
+
+            for(int j = 0 ; j < 26 ; j++){
+                freq[j] = Math.min(freq[j],temp[j]);
+            }
         }
 
         int cnt = 0;
-        for(int i = 1 ; i < words.length ; i++){
-            String word = words[i];
-            for(int j = 0 ; j < word.length() ; j++){
-                char ch = word.charAt(j);
-
-                // check if this character exist in st
-                if(st.contains(ch)) cnt++;
-
-
-            }
+        for(int i = 0 ; i < 26 ; i++){
+            if(freq[i] > 0) cnt++; // just check if this exist in all of the words 
         }
 
         return cnt;

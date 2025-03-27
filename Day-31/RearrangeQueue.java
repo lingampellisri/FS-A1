@@ -62,6 +62,64 @@ Constraints:
 0 <= ki < people.length
 It is guaranteed that the queue can be reconstructed.
  */
-public class RearrangeQueue {
-    
+
+import java.util.*;
+
+public class RearrangeQueue{
+    // T.C:- O(nlogn + n) , S.C:- O(n)
+    private static int[][] reconstructQueue(int[][] people){
+        // Initial apprpach is to sort according to the heights in decreasing order , if heights are same then 
+        // choose the one with minimum k (so that it comes at the front)
+
+        // First sort in descending order of heights and if heights are same sort according to the smaller value of k
+
+        /* You can use this way also 
+            Arrays.sort(people,new Comparator<int[]>(){
+            @Override
+            public int compare(int[] a,int[] b){
+
+                // first check if heights are same
+                if(a[0] == b[0]){
+                    // now place the person who has lesser k at the front
+                    return a[1] - b[1];
+                }
+
+                return b[0] - a[0]; // sort in descending order of heights otherwise
+            }
+        });
+            Or simply use lambda function as below
+         */
+        Arrays.sort(people,(a,b)->{
+           
+           return (a[0] == b[0]) ? a[1] - b[1] : b[0] - a[0] ;
+        });
+        
+        
+        // now traverse through each element in the people array and place it at it's correct kth position
+        List<int[]> temp = new ArrayList<>();
+        
+        for(int[] p : people){
+            int idx = p[1];
+            temp.add(idx,p);// just place this person at idx so that he have k ppl whose height is greater than or equal to his height and remaining elements in right will be shifted 1 index right 
+        }
+        
+        return temp.stream().toArray(int[][] :: new); // convert to 2d array
+    }
+    public static void main(String[] args){
+        try(Scanner sc = new Scanner(System.in)){
+
+            int n = sc.nextInt();
+            int[][] people = new int[n][2];
+            
+            for(int i = 0 ; i < n ; i++){
+                people[i][0] = sc.nextInt(); // h
+                people[i][1] = sc.nextInt(); // k
+            } 
+            
+            System.out.println(Arrays.deepToString(reconstructQueue(people))); // also prints nested 2d arrays 
+            
+            sc.close();
+        }
+        
+    }
 }

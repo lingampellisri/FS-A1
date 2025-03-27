@@ -54,6 +54,7 @@ public class Competition {
 
         return cnt;
     }
+    // Approach-ii) Using Bitmasking , T.C:- O(N + k) , S.C:- O(1)
     private static int getCountOfCommonChars2(String[] words){
         // maintain a bit mask
         // calc for first word
@@ -79,6 +80,7 @@ public class Competition {
         return countSetBits(bitmask);
 
     }
+    // Approach-i) Using hashmap , T.C:- O(N*k) , S.C:- O(N)
     private static int getCountOfCommonChars(String[] words){
         int[] freq = new int[26];
 

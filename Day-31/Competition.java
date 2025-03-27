@@ -43,7 +43,42 @@ Each word consists of only lower-case letters ('a'-'z').
  */
 import java.util.*;
 public class Competition {
+    private static int countSetBits(int num){
+        // Brain's algo , T.C:- O(k)
+        int cnt = 0;
+        while(num != 0){
+            // everytime clear the right most set bit
+            num = (num & (num - 1));
+            cnt++;
+        }
 
+        return cnt;
+    }
+    private static int getCountOfCommonChars2(String[] words){
+        // maintain a bit mask
+        // calc for first word
+        
+        int currMask = 0;
+        for(char ch : words[0].toCharArray()){
+            currMask |= (1 << (ch - 'a'));
+        }
+        int bitmask = currMask;
+
+        for(int i = 1 ; i < words.length ; i++){
+            String word = words[i];
+            currMask = 0;
+            for(char ch : word.toCharArray()){
+                currMask |= (1 << (ch - 'a')); // this (1 << (ch -'a')) helps us to set the bit at that position
+            }
+
+            bitmask &= currMask;
+
+        }
+
+        // Now count number of set bits in bitmask that is our answer 
+        return countSetBits(bitmask);
+
+    }
     private static int getCountOfCommonChars(String[] words){
         int[] freq = new int[26];
 
@@ -83,7 +118,7 @@ public class Competition {
 
         String[] words = sc.next().split(",");
 
-        System.out.println(getCountOfCommonChars(words));
+        System.out.println(getCountOfCommonChars2(words));
         
         sc.close();
     }

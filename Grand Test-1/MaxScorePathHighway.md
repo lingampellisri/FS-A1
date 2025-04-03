@@ -40,7 +40,7 @@ Output: 30
 > _You can illustrate this with two rows (nums1 and nums2) and arrows showing where switching is allowed._
 
 **📌 Image Placeholder:**  
-`![Valid Path Illustration](https://assets.leetcode.com/uploads/2020/07/16/sample_1_1893.png)`
+`![Valid Path Illustration](../assets/lc_1537_gt1.png)`
 
 ---
 

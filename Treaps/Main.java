@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Treap treap = new Treap();
+        BST treap = new Treap();
 
         System.out.print("Enter number of elements: ");
         int n = sc.nextInt();

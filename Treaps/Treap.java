@@ -1,11 +1,28 @@
 package Treaps;
-public class Treap {
+
+interface BST{
+    
+    void insert(int key);
+    void delete(int key);
+    TreapNode search(int key);
+    void printTree();
+    boolean isEmpty();
+}
+
+interface Heap{
+    void insert(int key);
+    void delete(int key);
+    TreapNode search(int key);
+}
+
+public class Treap implements BST,Heap{ // A class can implement multiple interfaces
     private TreapNode root;
 
     public Treap() {
         root = null;
     }
 
+    
     private TreapNode rightRotate(TreapNode y) {
         System.out.println("Right rotate at key: " + y.key);
         TreapNode x = y.left;
@@ -14,6 +31,7 @@ public class Treap {
         return x;
     }
 
+    
     private TreapNode leftRotate(TreapNode x) {
         System.out.println("Left rotate at key: " + x.key);
         TreapNode y = x.right;
@@ -44,6 +62,7 @@ public class Treap {
         return node;
     }
 
+    @Override
     public void insert(int key) {
         root = insert(root, key);
     }
@@ -72,6 +91,7 @@ public class Treap {
         return node;
     }
 
+    @Override
     public void delete(int key) {
         root = delete(root, key);
     }
@@ -83,6 +103,7 @@ public class Treap {
         return key < node.key ? search(node.left, key) : search(node.right, key);
     }
 
+    @Override
     public TreapNode search(int key) {
         return search(root, key);
     }
@@ -95,11 +116,13 @@ public class Treap {
         preorder(node.right);
     }
 
+    @Override
     public void printTree() {
         System.out.println("Treap (Preorder Traversal):");
         preorder(root);
     }
 
+    @Override
     public boolean isEmpty() {
         return root == null;
     }

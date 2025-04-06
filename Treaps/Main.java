@@ -1,4 +1,5 @@
 package Treaps;
+
 import java.util.Scanner;
 
 public class Main {
@@ -6,32 +7,40 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         BST treap = new Treap();
 
-        System.out.print("Enter number of elements: ");
+        System.out.print("🔢 Enter number of elements: ");
         int n = sc.nextInt();
 
-        System.out.println("Enter elements:");
+        System.out.println("📥 Enter elements to insert:");
         for (int i = 0; i < n; i++) {
             treap.insert(sc.nextInt());
         }
 
-        treap.printTree();
-
-        System.out.print("Enter key to search: ");
+        System.out.print("🔍 Enter key to search: ");
         int key = sc.nextInt();
-        TreapNode result = treap.search(key);
-        if (result != null)
-            System.out.println("Found key " + result.key + " with priority " + result.priority);
+        boolean result = treap.search(key);
+        if (result)
+            System.out.println("✅ Found key: " + key);
         else
-            System.out.println("Key not found!");
+            System.out.println("❌ Key not found!");
 
-        while (true) {
-            System.out.print("Enter key to delete (-1 to stop): ");
-            key = sc.nextInt();
-            if (key == -1 || treap.isEmpty()) break;
-            treap.delete(key);
-            treap.printTree();
+        // while (true) {
+        //     System.out.print("❌ Enter key to delete (-1 to stop): ");
+        //     key = sc.nextInt();
+        //     if (key == -1 || treap.isEmpty()) break;
+        //     treap.delete(key);
+        // }
+
+        // System.out.println("🚫 Treap is now empty or deletion stopped.");
+
+        System.out.print("🏅 Enter k to get the k-th largest element: ");
+        int k = sc.nextInt();
+        try {
+            int resultK = treap.getKthLargestElement(k);
+            System.out.println("🎯 " + k + "-th largest element is: " + resultK);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
 
-        System.out.println("Treap is now empty or deletion stopped.");
+        treap.printInorder();
     }
 }

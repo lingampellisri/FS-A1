@@ -17,30 +17,22 @@ public class Main {
 
         System.out.print("🔍 Enter key to search: ");
         int key = sc.nextInt();
-        boolean result = treap.search(key);
-        if (result)
+        TreapNode found = treap.search(key);
+        if (found != null)
             System.out.println("✅ Found key: " + key);
         else
             System.out.println("❌ Key not found!");
 
-        // while (true) {
-        //     System.out.print("❌ Enter key to delete (-1 to stop): ");
-        //     key = sc.nextInt();
-        //     if (key == -1 || treap.isEmpty()) break;
-        //     treap.delete(key);
-        // }
-
-        // System.out.println("🚫 Treap is now empty or deletion stopped.");
-
         System.out.print("🏅 Enter k to get the k-th largest element: ");
         int k = sc.nextInt();
         try {
-            int resultK = treap.getKthLargestElement(k);
+            int resultK = ((Treap) treap).getKthLargestElement(k);
             System.out.println("🎯 " + k + "-th largest element is: " + resultK);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.out.println("❗ " + e.getMessage());
         }
 
-        treap.printInorder();
+        ((Treap) treap).printInorder();
+        sc.close();
     }
 }

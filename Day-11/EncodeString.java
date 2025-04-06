@@ -1,3 +1,4 @@
+
 /*
 Birbal is creating a new binary code system BBC (Birbal Binary Code) as follows:
 
@@ -44,15 +45,33 @@ Sample Output-2:
 
  */
 import java.util.*;
+
 public class EncodeString {
+
+    public String encode(int num) {
+        num++;
+
+        StringBuilder sb = new StringBuilder();
+
+        while(num > 1){ // skip the leading one
+            sb.append(num & 1);
+            num >>= 1;
+        }
+
+        return sb.reverse().toString();
+
+
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        
+
         int num = sc.nextInt();
 
-        // add 1 to num  and convert to its binary representations and remove the highest set bit from left
+        // add 1 to num and convert to its binary representations and remove the highest
+        // set bit from left
 
-        System.out.println(Integer.toBinaryString(num+1).substring(1));
+        System.out.println(Integer.toBinaryString(num + 1).substring(1));
         sc.close();
     }
 }

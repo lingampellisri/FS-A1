@@ -43,7 +43,7 @@ Sample output-2:
 ----------------
 8
 
-Explanation: 
+Explanation:    
 ------------
 The subarrays of 2 2 4 4 are
 
@@ -61,55 +61,52 @@ The subarrays of 2 2 4 4 are
 The 7th smallest is 8
  */
 
- import java.util.*;
+import java.util.*;
 
- public class P4_Kth_Smallest_Subarray_Sum{
-     // Method-1 , T.C:- O(N^2 + NlogN) , S.C:- O(N)
-     private static int getKthSmallestSubarraySum1(int[] arr,int k,int n){
-         List<Integer> sums = new ArrayList<>();
-         
-         for(int i = 0 ; i < n ; i++){
-             // calc the sub array sum starting from i
-             int sum = 0;
-             for(int j = i ; j < n ; j++){
-                 sum += arr[j];
-                 sums.add(sum);
-             }
-             
-         }
-         
-         Collections.sort(sums);
-         
-         return sums.get(k-1);
-     }
-     
-     // Approach-2 
-     private static int getKthSmallestSubarraySum2(int[] arr,int k,int n){
-         
-         // using a binary search method
-         int low = Arrays.stream(arr).min().getAsInt();
-         int high = arr.stream().reduce(0,(a,b)-> a + b);
-         
-         
-         return sums.get(k-1);
-     }
-     public static void main(String[] args){
-         Scanner sc = new Scanner(System.in);
-         
-         int n = sc.nextInt();
-         
-         int k = sc.nextInt();
-         
-         int[] arr = new int[n];
-         
-         for(int i =0 ; i < n ; i++){
-             arr[i] = sc.nextInt();
-         }
-         
-         
-         System.out.print(sums.get(k-1));
-         
-         
-         sc.close();
-     }
- }
+public class P4_Kth_Smallest_Subarray_Sum {
+    private static int getKthSmallestSubarraySum2(int[] arr, int k, int n) {
+        int low = Arrays.stream(arr).min().getAsInt();
+        int high = Arrays.stream(arr).reduce(0, Integer::sum);
+
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+
+            if (countSubarraysWithSumAtMost(arr, mid) >= k) {
+                high = mid;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        return low;
+    }
+
+    private static int countSubarraysWithSumAtMost(int[] arr, int target) {
+        int count = 0, sum = 0, left = 0;
+
+        for (int right = 0; right < arr.length; right++) {
+            sum += arr[right];
+            while (sum > target) {
+                sum -= arr[left++];
+            }
+            count += right - left + 1;
+        }
+
+        return count;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+        int[] arr = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+        System.out.println(getKthSmallestSubarraySum2(arr, k, n));
+        sc.close();
+    }
+}

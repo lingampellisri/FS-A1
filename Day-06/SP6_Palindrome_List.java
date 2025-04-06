@@ -34,94 +34,101 @@ false
 
 import java.util.*;
 
-class Node{    
-	int data;    
-	Node next;    
-		
-	public Node(int data) {    
-		this.data = data;    
-		this.next = null;    
-	}    
-}    
+class Node {
+	int data;
+	Node next;
 
-class Solution
-{
-	//Write if any supporting methods here
-	
-    
-	boolean isPalindrome(Node head) 
-	{
-		//Write your code here and return boolean value
-		Node firstRef=head;
-		Node middle=findMiddle(head);
-		Node secondRef=reverseLinkedlist(middle.next);
-		
-		while(firstRef!=null&&secondRef!=null){
-		    if(firstRef.data!=secondRef.data){
-		        return false;
-		    }firstRef=firstRef.next;
-		    secondRef=secondRef.next;
-		}
-		return true;
-		
-	}    
-	
-	Node findMiddle(Node head){
-	    Node slow=head;
-	    Node fast=head;
-	    while(fast.next!=null && fast.next.next!=null){
-	        slow=slow.next;
-	        fast=fast.next.next;
-	    }
-	    return slow;
+	public Node(int data) {
+		this.data = data;
+		this.next = null;
 	}
-	
-	Node reverseLinkedlist(Node head){
-	    
-	    Node curr=head;
-	    Node prev=null;
-	    Node next;
-	    
-	    while(curr!=null){
-	        next=curr.next;
-	        curr.next=prev;
-	        prev=curr;
-	        curr=next;
-	    }
-	    return prev;
-	    
-	}
-	
 }
 
-public class PalindromeList 
-{    
-	public Node head = null;    
-	public Node tail = null;    
+class Solution {
+	// Write if any supporting methods here
 
-	public void addNode(int data) 
-	{    
-		Node newNode = new Node(data);    
-		if(head == null) 
-		{    
-			head = newNode;    
-			tail = newNode;    
-		}    
-		else 
-		{    
-			tail.next = newNode;    
-			tail = newNode;    
-		}    
-	}    
-        
-	public static void main(String[] args) 
-	{    
-		Scanner sc=new Scanner(System.in);
-		PalindromeList list = new PalindromeList();       
-		String list2[]=sc.nextLine().split(" "); 
-		for(int i=0;i<list2.length;i++)
+	private Node getMiddle(Node head) {
+		Node slow = head;
+		Node fast = head;
+
+		while (fast != null && fast.next != null) {
+			slow = slow.next;
+			fast = fast.next.next;
+		}
+
+		return slow;
+	}
+
+	public boolean isPalindrome(Node head) {
+		if (head == null || head.next == null)
+			return true;
+
+		// Step 1: Find the middle
+		Node middle = getMiddle(head);
+
+		// Step 2: Reverse second half
+		Node prev = null;
+		Node curr = middle;
+		while (curr != null) {
+			Node t = curr.next;
+			curr.next = prev;
+			prev = curr;
+			curr = t;
+		}
+
+		// Step 3: Compare both halves
+		Node first = head;
+		Node second = prev; // head of reversed second half
+		while (second != null) {
+			if (first.data != second.data)
+				return false;
+			first = first.next;
+			second = second.next;
+		}
+
+		return true;
+	}
+
+	Node reverseLinkedlist(Node head) {
+
+		Node curr = head;
+		Node prev = null;
+		Node next;
+
+		while (curr != null) {
+			next = curr.next;
+			curr.next = prev;
+			prev = curr;
+			curr = next;
+		}
+		return prev;
+
+	}
+
+}
+
+public class PalindromeList {
+	public Node head = null;
+	public Node tail = null;
+
+	public void addNode(int data) {
+		Node newNode = new Node(data);
+		if (head == null) {
+			head = newNode;
+			tail = newNode;
+		} else {
+			tail.next = newNode;
+			tail = newNode;
+		}
+	}
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		PalindromeList list = new PalindromeList();
+		String list2[] = sc.nextLine().split(" ");
+		for (int i = 0; i < list2.length; i++)
 			list.addNode(Integer.parseInt(list2[i]));
-		Solution sl=new Solution();
+		Solution sl = new Solution();
 		System.out.println(sl.isPalindrome(list.head));
-	}    
-}    
+	}
+}

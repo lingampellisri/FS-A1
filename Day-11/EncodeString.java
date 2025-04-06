@@ -52,8 +52,7 @@ public class EncodeString {
 
         // add 1 to num  and convert to its binary representations and remove the highest set bit from left
 
-        int res = num & ~(1 << 2); // if 2nd place has a set bit
-        System.out.println(Integer.toBinaryString(res));
+        System.out.println(Integer.toBinaryString(num+1).substring(1));
         sc.close();
     }
 }

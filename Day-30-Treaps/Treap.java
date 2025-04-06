@@ -129,11 +129,12 @@ public class Treap {
 	}
 
 	static void preorder(TreapNode root) {
-		if (root != null) {
-			System.out.println("key: " + root.key + " | priority: " + root.priority);
-			preorder(root.left);
-			preorder(root.right);
-		}
+		if(root == null) return;
+
+		System.out.println("key: " + root.key + " | priority: " + root.priority);
+		preorder(root.left);
+		preorder(root.right);
+		
 	}
 
 	// 6

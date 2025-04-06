@@ -34,3 +34,28 @@ Maximum of subarray {5, 2, 3} is 5
 Maximum of subarray {2, 3, 6} is 6
 */
 import java.util.*;
+
+public class P2MaxSubArrkWindow{
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int n = nums.length;
+
+        // Max Heap (value only)
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
+
+        int left = 0;
+        int idx = 0;
+        int[] res = new int[n - k + 1];
+
+        for (int right = 0; right < n; right++) {
+            maxHeap.offer(nums[right]);
+
+            if (right - left + 1 == k) {
+                res[idx++] = maxHeap.peek();
+                maxHeap.remove(nums[left]);  //  correct way to remove the left element
+                left++;
+            }
+        }
+
+        return res;
+    }
+}

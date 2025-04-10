@@ -74,33 +74,65 @@ Output: 30
 ## ✅ Java Implementation
 
 ```java
-class Solution {
-    private final int MOD = 1000_000_007;
+import java.util.Scanner;
 
-    public int maxSum(int[] nums1, int[] nums2) {
-        int i = 0, j = 0;
-        long sum1 = 0, sum2 = 0, score = 0;
+public class HighwayMaxScore {
+    private static final int MOD = 1_000_000_007; //Equivalent to 10^9 + 7
 
-        while (i < nums1.length && j < nums2.length) {
-            if (nums1[i] < nums2[j]) {
-                sum1 += nums1[i++];
-            } else if (nums2[j] < nums1[i]) {
-                sum2 += nums2[j++];
-            } else {
-                // common element
-                score += Math.max(sum1, sum2) + nums1[i];
-                sum1 = 0;
-                sum2 = 0;
+    public static int getMaxScore(int[] nums1, int[] nums2) {
+        //Write your code and return an integer, the maximum score
+        int m = nums1.length;
+        int n = nums2.length;
+
+        int i = 0 , j = 0;
+
+        // simulatenously calc the sum
+        long sum1 = 0 , sum2 = 0;
+        long score = 0;
+        while(i < m && j < n){
+            if(nums1[i] == nums2[j]){
+                score += Math.max(sum1,sum2) + nums1[i];
+                sum1 = sum2 = 0;
                 i++;
+                j++;
+            }else if(nums1[i] < nums2[j]){
+                sum1 += nums1[i];
+                i++;
+            }else {
+                sum2 += nums2[j];
                 j++;
             }
         }
 
-        while (i < nums1.length) sum1 += nums1[i++];
-        while (j < nums2.length) sum2 += nums2[j++];
-        score += Math.max(sum1, sum2);
+        while(i < m) sum1 += nums1[i++];
+        while(j < n) sum2 += nums2[j++];
 
+        score += Math.max(sum1,sum2);
         return (int)(score % MOD);
     }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Read Highway A
+        int n = scanner.nextInt();
+        int[] highwayA = new int[n];
+        for (int i = 0; i < n; i++) {
+            highwayA[i] = scanner.nextInt();
+        }
+
+        // Read Highway B
+        int m = scanner.nextInt();
+        int[] highwayB = new int[m];
+        for (int i = 0; i < m; i++) {
+            highwayB[i] = scanner.nextInt();
+        }
+
+        // Calculate and print max score
+        System.out.println(getMaxScore(highwayA, highwayB));
+
+        scanner.close();
+    }
 }
+
 ```

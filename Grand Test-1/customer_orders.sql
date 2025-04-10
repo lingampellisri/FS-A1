@@ -1,3 +1,12 @@
+-- DROP DATABASE grandtest IF EXISTS;
+CREATE DATABASE grandtest;
+
+use grandtest;
+-- DROP TABLE Customers IF EXISTS;
+-- DROP TABLE Products IF EXISTS;
+-- DROP TABLE Orders IF EXISTS;
+-- DROP TABLE OrderItems IF EXISTS;
+
 CREATE TABLE Customers (
   CustomerID INT PRIMARY KEY,
   Name VARCHAR(255),
@@ -39,7 +48,7 @@ INSERT INTO Customers (CustomerID, Name, Email, Address, PhoneNumber) VALUES
 (4, 'Diana Williams', 'diana.williams@example.com', '321 Oak St, Dallas, TX', '123-987-6543'),
 (5, 'Ethan Brown', 'ethan.brown@example.com', '654 Pine St, Seattle, WA', '222-333-4444'),
 (6, 'Fiona Adams', 'fiona.adams@example.com', '987 Cedar St, Miami, FL', '444-555-6666'),
-(7, 'George Clark', 'george.clark@example.com', '213 Birch St, San Francisco, CA', '555-666-7777');
+(7, 'George Clark', 'george.clark@example.com', '213 Birch St, San Francisco, CA', '555-666-7777'),
 (8, 'Henry Taylor', 'henry.taylor@example.com', '456 Spruce St, Denver, CO', '111-222-3333'),
 (9, 'Irene Green', 'irene.green@example.com', '789 Willow St, Austin, TX', '444-555-6666');
 

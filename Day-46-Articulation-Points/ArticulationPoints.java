@@ -66,6 +66,7 @@ Sample Output-4:
  */
 
 import java.util.*;
+
 class Graph {
     private final int n;
     private final int e;
@@ -96,35 +97,38 @@ class Graph {
         init(edges);
     }
 
-    private void dfs(int node,int parent,int[] tin,int[] low,boolean[] visited,boolean[] isAP){
+    private void dfs(int node, int parent, int[] tin, int[] low, boolean[] visited, boolean[] isAP) {
         visited[node] = true;
         tin[node] = low[node] = timer;
         timer++;
-        
+
         int child = 0; // this is a check for root node
-        for(Integer nbr : adjLst.get(node)){
-            
-            if(nbr == parent) continue; 
-            
-            if(!visited[nbr]){
-                dfs(nbr,node,tin,low,visited,isAP);
-                
+        for (int nbr : adjLst.get(node)) {
+
+            if (nbr == parent)
+                continue;
+
+            if (!visited[nbr]) {
+                dfs(nbr, node, tin, low, visited, isAP);
+
                 // Update the low
-                low[node] = Math.min(low[node],low[nbr]);
-                
+                low[node] = Math.min(low[node], low[nbr]);
+
                 // Check if this can be AP
-                if(low[nbr] >= tin[node] && parent != -1){
+                if (low[nbr] >= tin[node] && parent != -1) {
                     isAP[node] = true;
                 }
-                
+
                 child++;
-            }else{
-                // Update the low
-                low[node] = Math.min(low[node],low[nbr]);   
+            } else {
+                // Update the low , but not with the visited low , but tin since we should not
+                // take visited again
+                low[node] = Math.min(low[node], tin[nbr]);
             }
         }
-        
-        if(child > 1 && parent == -1){
+
+        // For root node to be AP it should have atleast 2 children
+        if (child >= 2 && parent == -1) {
             isAP[node] = true;
         }
     }
@@ -132,43 +136,41 @@ class Graph {
     // Function to return Breadth First Traversal of given graph.
     public ArrayList<Integer> articulationPoints(int V) {
         // Code here
-        
+
         // May be we required few data strctures
         int[] tin = new int[V];
         int[] low = new int[V];
         boolean[] visited = new boolean[V];
         boolean[] isAP = new boolean[V];
-        
-        
+
         // Start a dfs from each component
-        for(int i = 0 ; i < V ; i++){
-            if(!visited[i]){
-                dfs(i,-1,tin,low,visited,isAP);
+        for (int i = 0; i < V; i++) {
+            if (!visited[i]) {
+                dfs(i, -1, tin, low, visited, isAP);
             }
         }
-        
+
         ArrayList<Integer> res = new ArrayList<>();
-        for(int i = 0 ; i < V ; i++){
-            if(isAP[i]){
+        for (int i = 0; i < V; i++) {
+            if (isAP[i]) {
                 res.add(i);
             }
         }
-        
-        if(res.isEmpty()){
+
+        if (res.isEmpty()) {
             res.add(-1); // indicating no AP found
         }
-        
+
         return res;
-        
-        
+
     }
-    
+
 }
 
 public class ArticulationPoints {
-   
-    public static void main(String[] args){
-		Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         int v = sc.nextInt();
         int e = sc.nextInt();
 
@@ -179,7 +181,7 @@ public class ArticulationPoints {
         }
 
         Graph g = new Graph(v, e, edges);
-		System.out.println(g.articulationPoints(v));				
-	}
-    
+        System.out.println(g.articulationPoints(v));
+    }
+
 }
